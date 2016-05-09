@@ -141,6 +141,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     networkToast();
                 }
 
+
             }
         });
 
@@ -211,8 +212,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             // this is for changing stock changes from percent value to dollar value
             Utils.showPercent = !Utils.showPercent;
             this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
-        }
 
+        }
         return super.onOptionsItemSelected(item);
     }
 
