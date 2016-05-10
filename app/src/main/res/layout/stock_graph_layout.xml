@@ -15,13 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/stock_symbol_title_desc"
-        android:padding="10dp" />
+        android:textColor="@android:color/holo_blue_dark"
+        android:padding="15dp" />
 
-    <com.db.chart.view.LineChartView
-        android:id="@+id/stockLineChart"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/stockBarChart"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_below="@+id/txtStockTitle"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/graph_desc" />
 
 </RelativeLayout>

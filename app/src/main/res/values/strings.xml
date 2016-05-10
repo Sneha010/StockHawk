@@ -11,7 +11,7 @@
   <string name="input_prefill"></string>
   <string name="network_toast">Uh-oh! This app requires an internet connection</string>
 
-  <string name="symbol">Symbol</string>
+  <string name="symbol">symbol</string>
   <string name="stock_symbol_title_desc">Stock Line Graph Title</string>
   <string name="graph_desc">Stock Line Graph</string>
 </resources>

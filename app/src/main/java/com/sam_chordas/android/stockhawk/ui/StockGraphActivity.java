@@ -10,11 +10,18 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.db.chart.model.LineSet;
-import com.db.chart.view.LineChartView;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,15 +31,14 @@ import butterknife.ButterKnife;
  */
 public class StockGraphActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    @Bind(R.id.stockLineChart)
-    LineChartView stockLineChart;
+    @Bind(R.id.stockBarChart)
+    BarChart stockBarChart;
 
     @Bind(R.id.txtStockTitle)
     TextView txtStockTitle;
 
     private String mSelectedSymbol = "";
 
-    private LineSet mLineSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +53,9 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
             mSelectedSymbol = getIntent().getExtras().getString(getString(R.string.symbol));
         }
 
-        setupUI();
+        txtStockTitle.setText(mSelectedSymbol);
 
         initialiseLoader();
-    }
-
-    private void setupUI() {
-        txtStockTitle.setText(mSelectedSymbol);
     }
 
     private void initialiseLoader() {
@@ -84,6 +86,40 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
     }
 
     private void drawGraph(Cursor cursor){
+        cursor.moveToFirst();
+
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<String>();
+
+        for (int i = 0; i < cursor.getCount(); i++) {
+            float price = Float.parseFloat(cursor.getString(cursor.getColumnIndex(QuoteColumns.BIDPRICE)));
+            entries.add(new BarEntry(price , i));
+            labels.add(i+"");
+            cursor.moveToNext();
+        }
+
+        BarDataSet dataset = new BarDataSet(entries, "Bid price");
+        dataset.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        BarData data = new BarData(labels, dataset);
+        stockBarChart.setData(data);
+        data.setGroupSpace(80f);
+        stockBarChart.setDescription("Bid price over time");
+
+        data.setGroupSpace(80f);
+        stockBarChart.setScaleMinima(3f, 1f);
+        stockBarChart.setHovered(false);
+        stockBarChart.setDrawGridBackground(false);
+        stockBarChart.getAxisRight().setEnabled(false);
+
+        //Plots x-axis lables at bottom
+        XAxis xAxis = stockBarChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        xAxis.setDrawGridLines(false);
+
+        YAxis leftAxis = stockBarChart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+
 
     }
 
