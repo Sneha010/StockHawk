@@ -57,6 +57,9 @@
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/mystockwidget" />
         </receiver>
+        <service
+            android:name=".service.StockWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
