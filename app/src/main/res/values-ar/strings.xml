@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stock Hawk</string>
+    <string name="action_change_units" translatable="false">وحدات التغيير</string>
+    <string name="action_example">العمل سبيل المثال</string>
+    <string name="action_settings">إعدادات</string>
+    <string name="app_icon_desc">رمز التطبيق الأسهم هوك</string>
+    <string name="btn_for_adding_new_stock_desc">زر لإضافة الأسهم الجديدة</string>
+    <string name="content_test">بحث عن الأوراق المالية رمز</string>
+    <string name="graph_desc">الأسهم خط الرسم البياني</string>
+    <string name="my_stocks_bid_change_arrow">بلدي محاولة الأسهم التغيير السهم</string>
+    <string name="my_stocks_list_desc">قائمتي الأسهم</string>
+    <string name="my_stocks_title">بلدي الأسهم لقب</string>
+    <string name="network_toast">اه اوه! هذا التطبيق يتطلب اتصال بالإنترنت</string>
+    <string name="stock_bid_price_desc">الأسهم سعر</string>
+    <string name="stock_change_desc">الأسهم محاولة تغيير قيمة السعر</string>
+    <string name="stock_list_desc">اقائمتي الأسهم</string>
+    <string name="stock_symbol_desc">رمز السهم</string>
+    <string name="stock_symbol_title_desc">عنوان الخط الأسهم الرسم البياني</string>
+    <string name="symbol_search">رمز البحث</string>
+    <string name="no_network_connectivity">لا اتصال الشبكة</string>
+    <string name="no_stock_found">لا يوجد مخزون العثور على</string>
+</resources>
