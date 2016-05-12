@@ -5,6 +5,7 @@
       parent="Theme.AppCompat.Light.DarkActionBar">
       <item name="colorPrimary">@color/colorPrimary</item>
       <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
     <!-- Customize your theme here. -->
   </style>
 
@@ -27,5 +28,7 @@
   <style name="BidPriceTextStyleWidget">
     <item name="android:textSize">18sp</item>
   </style>
-
+  <style name="ColorsCircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
+    <item name="cpd_strokeColors">@array/progress_colors</item>
+  </style>
 </resources>

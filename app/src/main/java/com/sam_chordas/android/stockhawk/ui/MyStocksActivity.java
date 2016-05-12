@@ -19,6 +19,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -38,7 +40,20 @@ import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.touch_helper.SimpleItemTouchHelperCallback;
 import com.squareup.otto.Subscribe;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MyStocksActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    @Bind(R.id.rl_progress)
+    RelativeLayout mRlProgress;
+
+    @Bind(R.id.rl_error)
+    RelativeLayout mRlError;
+
+    @Bind(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -70,8 +85,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
         setContentView(R.layout.activity_my_stocks);
+        ButterKnife.bind(this);
         // The intent service is for executing immediate pulls from the Yahoo API
         // GCMTaskService can only schedule tasks, they cannot execute immediately
+        showProgress();
+
         mServiceIntent = new Intent(this, StockIntentService.class);
         if (savedInstanceState == null) {
             // Run the initialize task service so that some stocks appear upon an empty database
@@ -105,7 +123,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToRecyclerView(recyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +196,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     }
 
     public void networkToast() {
+
         Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
     }
 
@@ -230,10 +248,20 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+
         mCursorAdapter.swapCursor(data);
         mCursor = data;
-    }
 
+       if(data!=null && data.getCount() >0){
+           showList();
+       }else{
+           if(!isConnected)
+               showError(mContext.getResources().getString(R.string.no_network_connectivity));
+           else
+               showError(mContext.getResources().getString(R.string.no_stock_found));
+       }
+    }
 
 
     @Override
@@ -243,10 +271,29 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     @SuppressWarnings("unused")
     @Subscribe
-    public void invalidSymbolReceived(String message){
+    public void invalidSymbolReceived(String message) {
 
         Toast.makeText(MyStocksActivity.this, message, Toast.LENGTH_SHORT).show();
 
+    }
+
+    private void showError(String message){
+        mRlProgress.setVisibility(View.GONE);
+        mRlError.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
+
+        ((TextView)mRlError.findViewById(R.id.tv_errorMessage)).setText(message);
+    }
+
+    private void showProgress(){
+        mRlProgress.setVisibility(View.VISIBLE);
+        mRlError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
+    }
+    private void showList(){
+        mRlProgress.setVisibility(View.GONE);
+        mRlError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
 }
