@@ -1,9 +1,16 @@
 package com.sam_chordas.android.stockhawk.data;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.os.Binder;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +31,13 @@ public class StockWidgetDataProvider implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public void onCreate() {
-
+        fetchData();
     }
 
     @Override
     public void onDataSetChanged() {
+
+        fetchData();
 
     }
 
@@ -39,12 +48,34 @@ public class StockWidgetDataProvider implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public int getCount() {
+        if(mCursor!=null){
+            return mCursor.getCount();
+        }
         return 0;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        return null;
+
+        if(mCursor != null && mCursor.moveToPosition(position) ){
+            RemoteViews remoteViews = new RemoteViews(mContext.getPackageName() , R.layout.widget_list_item);
+            remoteViews.setTextViewText(R.id.stock_symbol , mCursor.getString(mCursor.getColumnIndex(QuoteColumns.SYMBOL)));
+            remoteViews.setTextViewText(R.id.bid_price , mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
+            remoteViews.setTextColor(R.id.bid_price ,mContext.getResources().getColor(R.color.colorPrimary));
+
+            if(mCursor.getInt(mCursor.getColumnIndex("is_up"))==1)
+               remoteViews.setImageViewBitmap(R.id.ivProgressIcon , BitmapFactory.decodeResource(mContext.getResources() ,R.drawable.arrow_up));
+            else
+                remoteViews.setImageViewBitmap(R.id.ivProgressIcon , BitmapFactory.decodeResource(mContext.getResources() ,R.drawable.arrow_down));
+
+            Intent intent = new Intent(mContext , MyStocksActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext , 0 ,intent, 0);
+
+            remoteViews.setOnClickPendingIntent(R.id.llStockRow , pendingIntent);
+            return remoteViews;
+
+        }else
+         return null;
     }
 
     @Override
@@ -54,20 +85,35 @@ public class StockWidgetDataProvider implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
     private void fetchData(){
+        final long identityToken = Binder.clearCallingIdentity();
+        mCursor = mContext.getContentResolver().query(
+                QuoteProvider.Quotes.CONTENT_URI,
+                new String[]{
+                        QuoteColumns._ID,
+                        QuoteColumns.SYMBOL,
+                        QuoteColumns.BIDPRICE,
+                        QuoteColumns.PERCENT_CHANGE,
+                        QuoteColumns.CHANGE,
+                        QuoteColumns.ISUP
+                },
+                QuoteColumns.ISCURRENT + " = ?",
+                new String[]{"1"},
+                null);
+        Binder.restoreCallingIdentity(identityToken);
 
     }
 }

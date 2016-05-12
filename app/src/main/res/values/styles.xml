@@ -20,5 +20,12 @@
     <item name="android:textSize">25sp</item>
     <item name="android:textAllCaps">true</item>
   </style>
+  <style name="StockSymbolTextStyleWidget">
+    <item name="android:textSize">20sp</item>
+    <item name="android:textAllCaps">true</item>
+  </style>
+  <style name="BidPriceTextStyleWidget">
+    <item name="android:textSize">18sp</item>
+  </style>
 
 </resources>
