@@ -258,8 +258,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
        }else{
            if(!isConnected)
                showError(mContext.getResources().getString(R.string.no_network_connectivity));
-           else
-               showError(mContext.getResources().getString(R.string.no_stock_found));
+
        }
     }
 
