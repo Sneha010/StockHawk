@@ -98,12 +98,12 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
             cursor.moveToNext();
         }
 
-        BarDataSet dataset = new BarDataSet(entries, "Bid price");
+        BarDataSet dataset = new BarDataSet(entries, getString(R.string.bar_chart_yAxis_desc));
         dataset.setColors(ColorTemplate.VORDIPLOM_COLORS);
         BarData data = new BarData(labels, dataset);
         stockBarChart.setData(data);
         data.setGroupSpace(80f);
-        stockBarChart.setDescription("Bid price over time");
+        stockBarChart.setDescription(getString(R.string.bar_chart_desc));
 
         data.setGroupSpace(80f);
         stockBarChart.setScaleMinima(3f, 1f);
