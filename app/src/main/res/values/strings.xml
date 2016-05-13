@@ -5,9 +5,10 @@
 
   <string name="action_settings">Settings</string>
   <string name="action_change_units">Change Units</string>
+  <string name="stock_Saved_Already" translatable="false">This stock is already saved!</string>
   <string name="symbol_search">Symbol Search</string>
   <string name="content_test">Search for a Stock Symbol</string>
-  <string name="input_hint" translatable="false">FB</string>
+  <string name="input_hint" translatable="false">eg. FB</string>
   <string name="input_prefill" translatable="false"></string>
   <string name="network_toast">Uh-oh! This app requires an internet connection</string>
   <string name="no_network_connectivity">No Network Connectivity</string>
@@ -27,6 +28,8 @@
   <string name="my_stocks_title">My Stocks title</string>
   <string name="my_stocks_list_desc">My stock list</string>
   <string name="my_stocks_bid_change_arrow">My stock bid change arrow</string>
+  <string name="bar_chart_desc">Bid price over time</string>
+  <string name="bar_chart_yAxis_desc">Bid price</string>
 
 
 </resources>

@@ -140,7 +140,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                             new String[]{input.toString()}, null);
                                     if (c.getCount() != 0) {
                                         Toast toast =
-                                                Toast.makeText(MyStocksActivity.this, "This stock is already saved!",
+                                                Toast.makeText(MyStocksActivity.this, getString(R.string.stock_Saved_Already),
                                                         Toast.LENGTH_LONG);
                                         toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
                                         toast.show();
@@ -258,8 +258,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
        }else{
            if(!isConnected)
                showError(mContext.getResources().getString(R.string.no_network_connectivity));
-           else
-               showError(mContext.getResources().getString(R.string.no_stock_found));
+
        }
     }
 
