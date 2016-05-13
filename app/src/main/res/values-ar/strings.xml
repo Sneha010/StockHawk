@@ -20,4 +20,5 @@
     <string name="symbol_search">رمز البحث</string>
     <string name="no_network_connectivity">لا اتصال الشبكة</string>
     <string name="no_stock_found">لا يوجد مخزون العثور على</string>
+    <string name="stock_Saved_Already">يتم حفظ هذه الأسهم بالفعل!</string>
 </resources>
